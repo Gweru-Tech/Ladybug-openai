@@ -6,75 +6,23 @@
   <title>Ladybug AI Chat</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐞</text></svg>" type="image/svg+xml" />
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 50%, #c44569 100%);
-      color: #333;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #1f1f2e;
+      color: white;
       display: flex;
       flex-direction: column;
       height: 100vh;
     }
 
     header {
-      background: linear-gradient(135deg, #dc143c 0%, #b8002e 100%);
-      padding: 16px 20px;
+      background-color: #2d2d44;
+      padding: 16px;
       text-align: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-      position: relative;
-    }
-
-    .header-content {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-    }
-
-    .ladybug-icon {
-      font-size: 2em;
-      animation: wiggle 2s infinite;
-    }
-
-    @keyframes wiggle {
-      0%, 100% { transform: rotate(0deg); }
-      25% { transform: rotate(-5deg); }
-      75% { transform: rotate(5deg); }
-    }
-
-    .header-title {
-      font-size: 1.8em;
+      font-size: 1.5em;
       font-weight: bold;
-      color: white;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    }
-
-    .language-selector {
-      position: absolute;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-
-    #languageSelect {
-      padding: 8px 12px;
-      border: none;
-      border-radius: 20px;
-      background-color: white;
-      color: #dc143c;
-      font-size: 0.9em;
-      cursor: pointer;
-      font-weight: 600;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      outline: none;
-    }
-
-    #languageSelect:hover {
-      background-color: #fff5f5;
+      border-bottom: 1px solid #444;
     }
 
     #chat {
@@ -84,179 +32,64 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
-      background: rgba(255, 255, 255, 0.95);
     }
 
     .message {
       max-width: 75%;
-      padding: 14px 18px;
+      padding: 12px 16px;
       border-radius: 20px;
-      line-height: 1.6;
+      line-height: 1.5;
       white-space: pre-wrap;
-      word-wrap: break-word;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      animation: slideIn 0.3s ease-out;
-    }
-
-    @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
 
     .user {
       align-self: flex-end;
-      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+      background-color: #4e7fff;
       color: white;
-      border-bottom-right-radius: 5px;
     }
 
     .bot {
       align-self: flex-start;
-      background-color: #2c2c2c;
-      color: white;
-      border-bottom-left-radius: 5px;
-      position: relative;
-      padding-left: 45px;
-    }
-
-    .bot::before {
-      content: '🐞';
-      position: absolute;
-      left: 12px;
-      top: 12px;
-      font-size: 1.5em;
+      background-color: #383851;
     }
 
     #inputArea {
       display: flex;
-      padding: 16px 20px;
-      background: linear-gradient(135deg, #dc143c 0%, #b8002e 100%);
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
-      gap: 12px;
+      padding: 12px;
+      background-color: #2d2d44;
+      border-top: 1px solid #444;
     }
 
     #userInput {
       flex: 1;
-      padding: 12px 20px;
+      padding: 10px 16px;
       border-radius: 25px;
-      border: 2px solid white;
+      border: none;
       outline: none;
       font-size: 1em;
-      background-color: white;
-      color: #333;
-      transition: box-shadow 0.3s;
-    }
-
-    #userInput:focus {
-      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+      background-color: #3a3a55;
+      color: white;
     }
 
     #sendBtn {
-      padding: 12px 28px;
+      margin-left: 12px;
+      padding: 10px 20px;
       border: none;
       border-radius: 25px;
-      background-color: white;
-      color: #dc143c;
+      background-color: #4e7fff;
+      color: white;
       font-size: 1em;
-      font-weight: bold;
       cursor: pointer;
-      transition: all 0.3s;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
 
     #sendBtn:hover {
-      background-color: #fff5f5;
-      transform: scale(1.05);
-    }
-
-    #sendBtn:active {
-      transform: scale(0.95);
-    }
-
-    .typing {
-      display: inline-block;
-    }
-
-    .typing::after {
-      content: '...';
-      animation: dots 1.5s infinite;
-    }
-
-    @keyframes dots {
-      0%, 20% { content: '.'; }
-      40% { content: '..'; }
-      60%, 100% { content: '...'; }
-    }
-
-    /* Scrollbar styling */
-    #chat::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    #chat::-webkit-scrollbar-track {
-      background: #f1f1f1;
-    }
-
-    #chat::-webkit-scrollbar-thumb {
-      background: #ff6b6b;
-      border-radius: 4px;
-    }
-
-    #chat::-webkit-scrollbar-thumb:hover {
-      background: #ee5a6f;
-    }
-
-    @media (max-width: 768px) {
-      .header-title {
-        font-size: 1.3em;
-      }
-      
-      .language-selector {
-        position: static;
-        transform: none;
-        margin-top: 10px;
-      }
-
-      .header-content {
-        flex-direction: column;
-      }
-
-      .message {
-        max-width: 85%;
-      }
+      background-color: #3b65d8;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="header-content">
-      <span class="ladybug-icon">🐞</span>
-      <h1 class="header-title">Ladybug AI</h1>
-    </div>
-    <div class="language-selector">
-      <select id="languageSelect" onchange="changeLanguage()">
-        <option value="en">🇬🇧 English</option>
-        <option value="id">🇮🇩 Indonesia</option>
-        <option value="es">🇪🇸 Español</option>
-        <option value="fr">🇫🇷 Français</option>
-        <option value="de">🇩🇪 Deutsch</option>
-        <option value="pt">🇵🇹 Português</option>
-        <option value="ru">🇷🇺 Русский</option>
-        <option value="ja">🇯🇵 日本語</option>
-        <option value="zh">🇨🇳 中文</option>
-        <option value="ko">🇰🇷 한국어</option>
-        <option value="ar">🇸🇦 العربية</option>
-        <option value="hi">🇮🇳 हिन्दी</option>
-      </select>
-    </div>
-  </header>
+  <header>🐞 Ladybug AI</header>
 
   <main id="chat"></main>
 
@@ -268,401 +101,16 @@
   <script>
     const chat = document.getElementById('chat');
     const conversationHistory = [];
-    let currentLanguage = 'en';
 
-    // Replace with your actual OpenAI API key
-    const OPENAI_API_KEY = '<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ladybug AI Chat</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐞</text></svg>" type="image/svg+xml" />
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 50%, #c44569 100%);
-      color: #333;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-    }
-
-    header {
-      background: linear-gradient(135deg, #dc143c 0%, #b8002e 100%);
-      padding: 16px 20px;
-      text-align: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-      position: relative;
-    }
-
-    .header-content {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-    }
-
-    .ladybug-icon {
-      font-size: 2em;
-      animation: wiggle 2s infinite;
-    }
-
-    @keyframes wiggle {
-      0%, 100% { transform: rotate(0deg); }
-      25% { transform: rotate(-5deg); }
-      75% { transform: rotate(5deg); }
-    }
-
-    .header-title {
-      font-size: 1.8em;
-      font-weight: bold;
-      color: white;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    }
-
-    .language-selector {
-      position: absolute;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-
-    #languageSelect {
-      padding: 8px 12px;
-      border: none;
-      border-radius: 20px;
-      background-color: white;
-      color: #dc143c;
-      font-size: 0.9em;
-      cursor: pointer;
-      font-weight: 600;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      outline: none;
-    }
-
-    #languageSelect:hover {
-      background-color: #fff5f5;
-    }
-
-    #chat {
-      flex: 1;
-      overflow-y: auto;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      background: rgba(255, 255, 255, 0.95);
-    }
-
-    .message {
-      max-width: 75%;
-      padding: 14px 18px;
-      border-radius: 20px;
-      line-height: 1.6;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      animation: slideIn 0.3s ease-out;
-    }
-
-    @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .user {
-      align-self: flex-end;
-      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
-      color: white;
-      border-bottom-right-radius: 5px;
-    }
-
-    .bot {
-      align-self: flex-start;
-      background-color: #2c2c2c;
-      color: white;
-      border-bottom-left-radius: 5px;
-      position: relative;
-      padding-left: 45px;
-    }
-
-    .bot::before {
-      content: '🐞';
-      position: absolute;
-      left: 12px;
-      top: 12px;
-      font-size: 1.5em;
-    }
-
-    #inputArea {
-      display: flex;
-      padding: 16px 20px;
-      background: linear-gradient(135deg, #dc143c 0%, #b8002e 100%);
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
-      gap: 12px;
-    }
-
-    #userInput {
-      flex: 1;
-      padding: 12px 20px;
-      border-radius: 25px;
-      border: 2px solid white;
-      outline: none;
-      font-size: 1em;
-      background-color: white;
-      color: #333;
-      transition: box-shadow 0.3s;
-    }
-
-    #userInput:focus {
-      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
-    }
-
-    #sendBtn {
-      padding: 12px 28px;
-      border: none;
-      border-radius: 25px;
-      background-color: white;
-      color: #dc143c;
-      font-size: 1em;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-
-    #sendBtn:hover {
-      background-color: #fff5f5;
-      transform: scale(1.05);
-    }
-
-    #sendBtn:active {
-      transform: scale(0.95);
-    }
-
-    .typing {
-      display: inline-block;
-    }
-
-    .typing::after {
-      content: '...';
-      animation: dots 1.5s infinite;
-    }
-
-    @keyframes dots {
-      0%, 20% { content: '.'; }
-      40% { content: '..'; }
-      60%, 100% { content: '...'; }
-    }
-
-    /* Scrollbar styling */
-    #chat::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    #chat::-webkit-scrollbar-track {
-      background: #f1f1f1;
-    }
-
-    #chat::-webkit-scrollbar-thumb {
-      background: #ff6b6b;
-      border-radius: 4px;
-    }
-
-    #chat::-webkit-scrollbar-thumb:hover {
-      background: #ee5a6f;
-    }
-
-    @media (max-width: 768px) {
-      .header-title {
-        font-size: 1.3em;
-      }
-      
-      .language-selector {
-        position: static;
-        transform: none;
-        margin-top: 10px;
-      }
-
-      .header-content {
-        flex-direction: column;
-      }
-
-      .message {
-        max-width: 85%;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <header>
-    <div class="header-content">
-      <span class="ladybug-icon">🐞</span>
-      <h1 class="header-title">Ladybug AI</h1>
-    </div>
-    <div class="language-selector">
-      <select id="languageSelect" onchange="changeLanguage()">
-        <option value="en">🇬🇧 English</option>
-        <option value="id">🇮🇩 Indonesia</option>
-        <option value="es">🇪🇸 Español</option>
-        <option value="fr">🇫🇷 Français</option>
-        <option value="de">🇩🇪 Deutsch</option>
-        <option value="pt">🇵🇹 Português</option>
-        <option value="ru">🇷🇺 Русский</option>
-        <option value="ja">🇯🇵 日本語</option>
-        <option value="zh">🇨🇳 中文</option>
-        <option value="ko">🇰🇷 한국어</option>
-        <option value="ar">🇸🇦 العربية</option>
-        <option value="hi">🇮🇳 हिन्दी</option>
-      </select>
-    </div>
-  </header>
-
-  <main id="chat"></main>
-
-  <div id="inputArea">
-    <input id="userInput" type="text" placeholder="Type your message..." onkeydown="if(event.key==='Enter') getResponse()" />
-    <button id="sendBtn" onclick="getResponse()">Send</button>
-  </div>
-
-  <script>
-    const chat = document.getElementById('chat');
-    const conversationHistory = [];
-    let currentLanguage = 'en';
-
-    // Replace with your actual OpenAI API key
+    // Replace with your OpenAI API key
     const OPENAI_API_KEY = 'YOUR_OPENAI_API_KEY_HERE';
 
-    // Language-specific UI text
-    const translations = {
-      en: {
-        placeholder: 'Type your message...',
-        sendBtn: 'Send',
-        typing: 'Typing',
-        error: 'An error occurred while connecting to Ladybug AI',
-        systemPrompt: 'You are Ladybug AI, a friendly, helpful, and cheerful AI assistant. You are knowledgeable, patient, and always ready to help with a positive attitude. Respond in a warm and engaging manner.'
-      },
-      id: {
-        placeholder: 'Tulis pesan...',
-        sendBtn: 'Kirim',
-        typing: 'Mengetik',
-        error: 'Terjadi kesalahan saat menghubungi Ladybug AI',
-        systemPrompt: 'Kamu adalah Ladybug AI, asisten AI yang ramah, membantu, dan ceria. Kamu berpengetahuan luas, sabar, dan selalu siap membantu dengan sikap positif. Jawab dengan cara yang hangat dan menarik.'
-      },
-      es: {
-        placeholder: 'Escribe tu mensaje...',
-        sendBtn: 'Enviar',
-        typing: 'Escribiendo',
-        error: 'Ocurrió un error al conectar con Ladybug AI',
-        systemPrompt: 'Eres Ladybug AI, un asistente de IA amigable, útil y alegre. Eres conocedor, paciente y siempre listo para ayudar con una actitud positiva. Responde de manera cálida y atractiva.'
-      },
-      fr: {
-        placeholder: 'Tapez votre message...',
-        sendBtn: 'Envoyer',
-        typing: 'En train d\'écrire',
-        error: 'Une erreur s\'est produite lors de la connexion à Ladybug AI',
-        systemPrompt: 'Tu es Ladybug AI, un assistant IA amical, serviable et joyeux. Tu es compétent, patient et toujours prêt à aider avec une attitude positive. Réponds de manière chaleureuse et engageante.'
-      },
-      de: {
-        placeholder: 'Nachricht eingeben...',
-        sendBtn: 'Senden',
-        typing: 'Tippt',
-        error: 'Beim Verbinden mit Ladybug AI ist ein Fehler aufgetreten',
-        systemPrompt: 'Du bist Ladybug AI, ein freundlicher, hilfsbereiter und fröhlicher KI-Assistent. Du bist sachkundig, geduldig und immer bereit zu helfen mit einer positiven Einstellung. Antworte auf eine warme und ansprechende Weise.'
-      },
-      pt: {
-        placeholder: 'Digite sua mensagem...',
-        sendBtn: 'Enviar',
-        typing: 'Digitando',
-        error: 'Ocorreu um erro ao conectar com Ladybug AI',
-        systemPrompt: 'Você é Ladybug AI, um assistente de IA amigável, prestativo e alegre. Você é conhecedor, paciente e sempre pronto para ajudar com uma atitude positiva. Responda de maneira calorosa e envolvente.'
-      },
-      ru: {
-        placeholder: 'Введите сообщение...',
-        sendBtn: 'Отправить',
-        typing: 'Печатает',
-        error: 'Произошла ошибка при подключении к Ladybug AI',
-        systemPrompt: 'Ты Ladybug AI, дружелюбный, полезный и веселый AI-ассистент. Ты знающий, терпеливый и всегда готов помочь с позитивным настроем. Отвечай тепло и увлекательно.'
-      },
-      ja: {
-        placeholder: 'メッセージを入力...',
-        sendBtn: '送信',
-        typing: '入力中',
-        error: 'Ladybug AIへの接続中にエラーが発生しました',
-        systemPrompt: 'あなたはLadybug AI、親切で役立つ明るいAIアシスタントです。知識豊富で忍耐強く、常に前向きな姿勢で助ける準備ができています。温かく魅力的な方法で応答してください。'
-      },
-      zh: {
-        placeholder: '输入您的消息...',
-        sendBtn: '发送',
-        typing: '正在输入',
-        error: '连接Ladybug AI时发生错误',
-        systemPrompt: '你是Ladybug AI，一个友好、乐于助人且充满活力的AI助手。你知识渊博、有耐心，总是以积极的态度准备提供帮助。以温暖而引人入胜的方式回应。'
-      },
-      ko: {
-        placeholder: '메시지 입력...',
-        sendBtn: '전송',
-        typing: '입력 중',
-        error: 'Ladybug AI 연결 중 오류가 발생했습니다',
-        systemPrompt: '당신은 Ladybug AI입니다. 친근하고 도움이 되며 명랑한 AI 어시스턴트입니다. 지식이 풍부하고 인내심이 있으며 항상 긍정적인 태도로 도울 준비가 되어 있습니다. 따뜻하고 매력적인 방식으로 응답하세요.'
-      },
-      ar: {
-        placeholder: 'اكتب رسالتك...',
-        sendBtn: 'إرسال',
-        typing: 'يكتب',
-        error: 'حدث خطأ أثناء الاتصال بـ Ladybug AI',
-        systemPrompt: 'أنت Ladybug AI، مساعد ذكاء اصطناعي ودود ومفيد ومبهج. أنت على دراية وصبور ومستعد دائمًا للمساعدة بموقف إيجابي. استجب بطريقة دافئة وجذابة.'
-      },
-      hi: {
-        placeholder: 'अपना संदेश लिखें...',
-        sendBtn: 'भेजें',
-        typing: 'टाइप कर रहा है',
-        error: 'Ladybug AI से कनेक्ट करते समय एक त्रुटि हुई',
-        systemPrompt: 'आप Ladybug AI हैं, एक मित्रवत, सहायक और प्रसन्न AI सहायक। आप जानकार, धैर्यवान हैं और हमेशा सकारात्मक रवैये के साथ मदद करने के लिए तैयार हैं। गर्मजोशी और आकर्षक तरीके से जवाब दें।'
-      }
-    };
-
-    // Initialize with welcome message
-    window.onload = function() {
-      addMessage('Hi! I\'m Ladybug AI 🐞 How can I help you today?', false);
-    };
-
-    function changeLanguage() {
-      currentLanguage = document.getElementById('languageSelect').value;
-      const lang = translations[currentLanguage];
-      
-      document.getElementById('userInput').placeholder = lang.placeholder;
-      document.getElementById('sendBtn').textContent = lang.sendBtn;
-      
-      // Add language change notification
-      const langNames = {
-        en: 'English', id: 'Indonesian', es: 'Spanish', fr: 'French',
-        de: 'German', pt: 'Portuguese', ru: 'Russian', ja: 'Japanese',
-        zh: 'Chinese', ko: 'Korean', ar: 'Arabic', hi: 'Hindi'
-      };
-      
-      addMessage(`Language changed to ${langNames[currentLanguage]} 🌍`, false);
-    }
-
     function addMessage(content, isUser = false) {
       const msg = document.createElement('div');
       msg.className = 'message ' + (isUser ? 'user' : 'bot');
       msg.textContent = content;
       chat.appendChild(msg);
       chat.scrollTop = chat.scrollHeight;
-      return msg;
     }
 
     async function getResponse() {
@@ -672,16 +120,13 @@
 
       addMessage(text, true);
       input.value = '';
-      
-      // Add user message to history
+      addMessage("Typing...", false);
+
+      // Add user message to conversation history
       conversationHistory.push({
         role: 'user',
         content: text
       });
-
-      const lang = translations[currentLanguage];
-      const typingMsg = addMessage(lang.typing, false);
-      typingMsg.classList.add('typing');
 
       try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -695,7 +140,7 @@
             messages: [
               {
                 role: 'system',
-                content: lang.systemPrompt + ` Always respond in ${currentLanguage === 'en' ? 'English' : currentLanguage === 'id' ? 'Indonesian' : currentLanguage === 'es' ? 'Spanish' : currentLanguage === 'fr' ? 'French' : currentLanguage === 'de' ? 'German' : currentLanguage === 'pt' ? 'Portuguese' : currentLanguage === 'ru' ? 'Russian' : currentLanguage === 'ja' ? 'Japanese' : currentLanguage === 'zh' ? 'Chinese' : currentLanguage === 'ko' ? 'Korean' : currentLanguage === 'ar' ? 'Arabic' : 'Hindi'}.`
+                content: 'You are Ladybug AI, a friendly, helpful, and knowledgeable AI assistant. You are smart, patient, and always ready to assist with any questions or tasks. You communicate in a warm, engaging, and professional manner.'
               },
               ...conversationHistory
             ],
@@ -705,223 +150,26 @@
         });
 
         const data = await response.json();
-        
-        chat.removeChild(typingMsg);
+        chat.removeChild(chat.lastChild);
 
         if (data.error) {
-          addMessage(`❌ Error: ${data.error.message}`, false);
+          addMessage(`Error: ${data.error.message || "No response from AI."}`);
         } else {
           const aiResponse = data.choices[0].message.content;
-          addMessage(aiResponse, false);
+          addMessage(aiResponse);
           
-          // Add AI response to history
+          // Add AI response to conversation history
           conversationHistory.push({
             role: 'assistant',
             content: aiResponse
           });
         }
       } catch (error) {
-        chat.removeChild(typingMsg);
-        addMessage(`❌ ${lang.error}: ${error.message}`, false);
+        chat.removeChild(chat.lastChild);
+        addMessage("An error occurred while connecting to AI.");
+        console.error('Error:', error);
       }
     }
-
-    // Auto-resize input on mobile
-    document.getElementById('userInput').addEventListener('input', function() {
-      this.style.height = 'auto';
-      this.style.height = this.scrollHeight + 'px';
-    });
-  </script>
-
-</body>
-</html>
-';
-
-    // Language-specific UI text
-    const translations = {
-      en: {
-        placeholder: 'Type your message...',
-        sendBtn: 'Send',
-        typing: 'Typing',
-        error: 'An error occurred while connecting to Ladybug AI',
-        systemPrompt: 'You are Ladybug AI, a friendly, helpful, and cheerful AI assistant. You are knowledgeable, patient, and always ready to help with a positive attitude. Respond in a warm and engaging manner.'
-      },
-      id: {
-        placeholder: 'Tulis pesan...',
-        sendBtn: 'Kirim',
-        typing: 'Mengetik',
-        error: 'Terjadi kesalahan saat menghubungi Ladybug AI',
-        systemPrompt: 'Kamu adalah Ladybug AI, asisten AI yang ramah, membantu, dan ceria. Kamu berpengetahuan luas, sabar, dan selalu siap membantu dengan sikap positif. Jawab dengan cara yang hangat dan menarik.'
-      },
-      es: {
-        placeholder: 'Escribe tu mensaje...',
-        sendBtn: 'Enviar',
-        typing: 'Escribiendo',
-        error: 'Ocurrió un error al conectar con Ladybug AI',
-        systemPrompt: 'Eres Ladybug AI, un asistente de IA amigable, útil y alegre. Eres conocedor, paciente y siempre listo para ayudar con una actitud positiva. Responde de manera cálida y atractiva.'
-      },
-      fr: {
-        placeholder: 'Tapez votre message...',
-        sendBtn: 'Envoyer',
-        typing: 'En train d\'écrire',
-        error: 'Une erreur s\'est produite lors de la connexion à Ladybug AI',
-        systemPrompt: 'Tu es Ladybug AI, un assistant IA amical, serviable et joyeux. Tu es compétent, patient et toujours prêt à aider avec une attitude positive. Réponds de manière chaleureuse et engageante.'
-      },
-      de: {
-        placeholder: 'Nachricht eingeben...',
-        sendBtn: 'Senden',
-        typing: 'Tippt',
-        error: 'Beim Verbinden mit Ladybug AI ist ein Fehler aufgetreten',
-        systemPrompt: 'Du bist Ladybug AI, ein freundlicher, hilfsbereiter und fröhlicher KI-Assistent. Du bist sachkundig, geduldig und immer bereit zu helfen mit einer positiven Einstellung. Antworte auf eine warme und ansprechende Weise.'
-      },
-      pt: {
-        placeholder: 'Digite sua mensagem...',
-        sendBtn: 'Enviar',
-        typing: 'Digitando',
-        error: 'Ocorreu um erro ao conectar com Ladybug AI',
-        systemPrompt: 'Você é Ladybug AI, um assistente de IA amigável, prestativo e alegre. Você é conhecedor, paciente e sempre pronto para ajudar com uma atitude positiva. Responda de maneira calorosa e envolvente.'
-      },
-      ru: {
-        placeholder: 'Введите сообщение...',
-        sendBtn: 'Отправить',
-        typing: 'Печатает',
-        error: 'Произошла ошибка при подключении к Ladybug AI',
-        systemPrompt: 'Ты Ladybug AI, дружелюбный, полезный и веселый AI-ассистент. Ты знающий, терпеливый и всегда готов помочь с позитивным настроем. Отвечай тепло и увлекательно.'
-      },
-      ja: {
-        placeholder: 'メッセージを入力...',
-        sendBtn: '送信',
-        typing: '入力中',
-        error: 'Ladybug AIへの接続中にエラーが発生しました',
-        systemPrompt: 'あなたはLadybug AI、親切で役立つ明るいAIアシスタントです。知識豊富で忍耐強く、常に前向きな姿勢で助ける準備ができています。温かく魅力的な方法で応答してください。'
-      },
-      zh: {
-        placeholder: '输入您的消息...',
-        sendBtn: '发送',
-        typing: '正在输入',
-        error: '连接Ladybug AI时发生错误',
-        systemPrompt: '你是Ladybug AI，一个友好、乐于助人且充满活力的AI助手。你知识渊博、有耐心，总是以积极的态度准备提供帮助。以温暖而引人入胜的方式回应。'
-      },
-      ko: {
-        placeholder: '메시지 입력...',
-        sendBtn: '전송',
-        typing: '입력 중',
-        error: 'Ladybug AI 연결 중 오류가 발생했습니다',
-        systemPrompt: '당신은 Ladybug AI입니다. 친근하고 도움이 되며 명랑한 AI 어시스턴트입니다. 지식이 풍부하고 인내심이 있으며 항상 긍정적인 태도로 도울 준비가 되어 있습니다. 따뜻하고 매력적인 방식으로 응답하세요.'
-      },
-      ar: {
-        placeholder: 'اكتب رسالتك...',
-        sendBtn: 'إرسال',
-        typing: 'يكتب',
-        error: 'حدث خطأ أثناء الاتصال بـ Ladybug AI',
-        systemPrompt: 'أنت Ladybug AI، مساعد ذكاء اصطناعي ودود ومفيد ومبهج. أنت على دراية وصبور ومستعد دائمًا للمساعدة بموقف إيجابي. استجب بطريقة دافئة وجذابة.'
-      },
-      hi: {
-        placeholder: 'अपना संदेश लिखें...',
-        sendBtn: 'भेजें',
-        typing: 'टाइप कर रहा है',
-        error: 'Ladybug AI से कनेक्ट करते समय एक त्रुटि हुई',
-        systemPrompt: 'आप Ladybug AI हैं, एक मित्रवत, सहायक और प्रसन्न AI सहायक। आप जानकार, धैर्यवान हैं और हमेशा सकारात्मक रवैये के साथ मदद करने के लिए तैयार हैं। गर्मजोशी और आकर्षक तरीके से जवाब दें।'
-      }
-    };
-
-    // Initialize with welcome message
-    window.onload = function() {
-      addMessage('Hi! I\'m Ladybug AI 🐞 How can I help you today?', false);
-    };
-
-    function changeLanguage() {
-      currentLanguage = document.getElementById('languageSelect').value;
-      const lang = translations[currentLanguage];
-      
-      document.getElementById('userInput').placeholder = lang.placeholder;
-      document.getElementById('sendBtn').textContent = lang.sendBtn;
-      
-      // Add language change notification
-      const langNames = {
-        en: 'English', id: 'Indonesian', es: 'Spanish', fr: 'French',
-        de: 'German', pt: 'Portuguese', ru: 'Russian', ja: 'Japanese',
-        zh: 'Chinese', ko: 'Korean', ar: 'Arabic', hi: 'Hindi'
-      };
-      
-      addMessage(`Language changed to ${langNames[currentLanguage]} 🌍`, false);
-    }
-
-    function addMessage(content, isUser = false) {
-      const msg = document.createElement('div');
-      msg.className = 'message ' + (isUser ? 'user' : 'bot');
-      msg.textContent = content;
-      chat.appendChild(msg);
-      chat.scrollTop = chat.scrollHeight;
-      return msg;
-    }
-
-    async function getResponse() {
-      const input = document.getElementById('userInput');
-      const text = input.value.trim();
-      if (!text) return;
-
-      addMessage(text, true);
-      input.value = '';
-      
-      // Add user message to history
-      conversationHistory.push({
-        role: 'user',
-        content: text
-      });
-
-      const lang = translations[currentLanguage];
-      const typingMsg = addMessage(lang.typing, false);
-      typingMsg.classList.add('typing');
-
-      try {
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${OPENAI_API_KEY}`
-          },
-          body: JSON.stringify({
-            model: 'gpt-3.5-turbo',
-            messages: [
-              {
-                role: 'system',
-                content: lang.systemPrompt + ` Always respond in ${currentLanguage === 'en' ? 'English' : currentLanguage === 'id' ? 'Indonesian' : currentLanguage === 'es' ? 'Spanish' : currentLanguage === 'fr' ? 'French' : currentLanguage === 'de' ? 'German' : currentLanguage === 'pt' ? 'Portuguese' : currentLanguage === 'ru' ? 'Russian' : currentLanguage === 'ja' ? 'Japanese' : currentLanguage === 'zh' ? 'Chinese' : currentLanguage === 'ko' ? 'Korean' : currentLanguage === 'ar' ? 'Arabic' : 'Hindi'}.`
-              },
-              ...conversationHistory
-            ],
-            temperature: 0.7,
-            max_tokens: 1500
-          }),
-        });
-
-        const data = await response.json();
-        
-        chat.removeChild(typingMsg);
-
-        if (data.error) {
-          addMessage(`❌ Error: ${data.error.message}`, false);
-        } else {
-          const aiResponse = data.choices[0].message.content;
-          addMessage(aiResponse, false);
-          
-          // Add AI response to history
-          conversationHistory.push({
-            role: 'assistant',
-            content: aiResponse
-          });
-        }
-      } catch (error) {
-        chat.removeChild(typingMsg);
-        addMessage(`❌ ${lang.error}: ${error.message}`, false);
-      }
-    }
-
-    // Auto-resize input on mobile
-    document.getElementById('userInput').addEventListener('input', function() {
-      this.style.height = 'auto';
-      this.style.height = this.scrollHeight + 'px';
-    });
   </script>
 
 </body>
